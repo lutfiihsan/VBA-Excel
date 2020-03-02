@@ -1,0 +1,149 @@
+Function RegexExtract(ByVal text As String, _
+                      ByVal extract_what As String, _
+                      Optional separator As String = ", ") As String
+
+Dim allMatches As Object
+Dim RE As Object
+Set RE = CreateObject("vbscript.regexp")
+Dim i As Long, j As Long
+Dim result As String
+
+RE.Pattern = extract_what
+RE.Global = True
+Set allMatches = RE.Execute(text)
+
+For i = 0 To allMatches.Count - 1
+    For j = 0 To allMatches.Item(i).SubMatches.Count - 1
+        result = result & (separator & allMatches.Item(i).SubMatches.Item(j))
+    Next
+Next
+
+If Len(result) <> 0 Then
+    result = Right$(result, Len(result) - Len(separator))
+End If
+
+RegexExtract = result
+
+End Function
+'UDF untuk REGEXTRACT
+Function REGEXTRACT(strInput As String, regexPattern As String) As String
+    Dim regEx As New RegExp
+    With regEx
+        .Global = True
+        .MultiLine = True
+        .IgnoreCase = False
+        .Pattern = regexPattern
+    End With
+
+    If regEx.Test(strInput) Then
+        Set Matches = regEx.Execute(strInput)
+        REGEXTRACT = Matches(0).Value
+    Else
+        REGEXTRACT = "FALSE"
+    End If
+End Function
+
+'UDF untuk REGMATCH
+Function REGMATCH(strInput As String, regexPattern As String) As String
+    Dim regEx As New RegExp
+    With regEx
+        .Global = True
+        .MultiLine = True
+        .IgnoreCase = False
+        .Pattern = regexPattern
+    End With
+
+    If regEx.Test(strInput) Then
+        Set Matches = regEx.Execute(strInput)
+        REGMATCH = "TRUE"
+    Else
+        REGMATCH = "FALSE"
+    End If
+End Function
+
+'UDF untuk REGCOUNT
+Public Function REGCOUNT(text As String, Pattern As String, Optional IgnoreCase As Boolean = True) As Integer
+    Dim retval As Integer
+
+    Dim RE As Object
+    Dim Matches As Object
+
+    Set RE = CreateObject("vbscript.regexp")
+    RE.IgnoreCase = IgnoreCase
+    RE.Global = True
+
+    RE.Pattern = Pattern
+    Set Matches = RE.Execute(text)
+
+    retval = Matches.Count
+
+    REGCOUNT = retval
+End Function
+
+'UDF untuk REGREPLACE
+Function REGREPLACE(strInput As String, matchPattern As String, Optional ByVal replacePattern As String = "") As Variant
+    Dim inputRegexObj As New VBScript_RegExp_55.RegExp
+
+    With inputRegexObj
+        .Global = True
+        .MultiLine = True
+        .IgnoreCase = False
+        .Pattern = matchPattern
+    End With
+
+    REGREPLACE = inputRegexObj.Replace(strInput, replacePattern)
+End Function
+
+'UDF untuk REGTRACTARRAY Delimiter Comma
+Function REGTRACTARRAY(ByVal text As String, ByVal extract_what As String, Optional separator As String = ",") As String
+
+Dim allMatches As Object
+Dim RE As Object
+Set RE = CreateObject("vbscript.regexp")
+Dim i As Long, j As Long
+Dim result As String
+
+RE.Pattern = extract_what
+RE.Global = True
+Set allMatches = RE.Execute(text)
+
+For i = 0 To allMatches.Count - 1
+    For j = 0 To allMatches.Item(i).SubMatches.Count - 1
+        result = result & (separator & allMatches.Item(i).SubMatches.Item(j))
+    Next
+Next
+
+If Len(result) <> 0 Then
+    result = Right$(result, Len(result) - Len(separator))
+End If
+
+REGTRACTARRAY = result
+
+End Function
+
+'UDF untuk REGTRACTARRAY Custom Delimiter
+Function REGTRACTARRAY2(ByVal text As String, ByVal extract_what As String, Optional separator As String = "##") As String
+
+Dim allMatches As Object
+Dim RE As Object
+Set RE = CreateObject("vbscript.regexp")
+Dim i As Long, j As Long
+Dim result As String
+
+RE.Pattern = extract_what
+RE.Global = True
+Set allMatches = RE.Execute(text)
+
+For i = 0 To allMatches.Count - 1
+    For j = 0 To allMatches.Item(i).SubMatches.Count - 1
+        result = result & (separator & allMatches.Item(i).SubMatches.Item(j))
+    Next
+Next
+
+If Len(result) <> 0 Then
+    result = Right$(result, Len(result) - Len(separator))
+End If
+
+REGTRACTARRAY2 = result
+
+End Function
