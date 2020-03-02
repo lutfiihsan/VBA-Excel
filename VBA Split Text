@@ -1,0 +1,8 @@
+'UDF untuk SPLITTEXT
+Public Function SPLITEXT(myCellValue As String, mySeparator As String, i As Integer)
+
+Dim mySplitValue() As String
+mySplitValue = Split(myCellValue, mySeparator)
+SPLITEXT = mySplitValue(i - 1)
+
+End Function
