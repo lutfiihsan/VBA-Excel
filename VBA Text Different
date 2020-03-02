@@ -1,0 +1,24 @@
+Function TEXTDIFFERENT(rngA As Range, rngB As Range) As String
+    
+    Dim WordsA As Variant, WordsB As Variant
+    Dim ndxA As Long, ndxB As Long, strTemp As String
+        
+    WordsA = Split(rngA.text, " ")
+    WordsB = Split(rngB.text, " ")
+    
+    For ndxB = LBound(WordsB) To UBound(WordsB)
+        For ndxA = LBound(WordsA) To UBound(WordsA)
+            If StrComp(WordsA(ndxA), WordsB(ndxB), vbTextCompare) = 0 Then
+                WordsA(ndxA) = vbNullString
+                Exit For
+            End If
+        Next ndxA
+    Next ndxB
+    
+    For ndxA = LBound(WordsA) To UBound(WordsA)
+        If WordsA(ndxA) <> vbNullString Then strTemp = strTemp & WordsA(ndxA) & " "
+    Next ndxA
+    
+    TEXTDIFFERENT = Trim(strTemp)
+
+End Function
